@@ -12,18 +12,37 @@ namespace RegistryServer.Controllers
     [ApiController]
     public class ClientInfosController : ControllerBase
     {
-        // GET: api/ClientInfos
-        [HttpGet]
-        public IEnumerable<ClientInfo> Get()
+        private static Dictionary<string, List<ClientInfo>> clientDictionary = new Dictionary<string, List<ClientInfo>>
         {
-            return new ClientInfo[] { "value1", "value2" };
-        }
+            {"Trustworthy dolphin", new List<ClientInfo>
+            {
+                new ClientInfo(),
+                new ClientInfo()
+            } },
+            {"Total Legal Music", new List<ClientInfo>
+            {
+                new ClientInfo(),
+                new ClientInfo()
+            } },
+            {"Truth.exe", new List<ClientInfo>
+            {
+                new ClientInfo(),
+                new ClientInfo()
+            } }
+        };
+
+        // GET: api/ClientInfos
+        //[HttpGet]
+        //public IEnumerable<ClientInfo> Get()
+        //{
+        //    return new ClientInfo[] { "value1", "value2" };
+        //}
 
         // GET: api/ClientInfos/5
-        [HttpGet("{id}", Name = "Get")]
-        public ClientInfo Get(int id)
+        [HttpGet("{id}")]
+        public List<ClientInfo> Get(string id)
         {
-            return "value";
+            return clientDictionary[id];
         }
 
         // POST: api/ClientInfos
