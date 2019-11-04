@@ -27,5 +27,23 @@
         {
             
         }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                ClientInfo ci = (ClientInfo)obj;
+                return (_portNumber == ci.PortNumber) && (_clientIpAddress == ci.ClientIpAddress);
+            };
+        }
+
+        public override int GetHashCode()
+        {
+            return (_portNumber.GetHashCode() * 7) + (_clientIpAddress.GetHashCode() * 7);
+        }
     }
 }

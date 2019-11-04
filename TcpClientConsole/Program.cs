@@ -6,7 +6,11 @@ namespace TcpClientConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ClientWorker cw = new ClientWorker();
+            cw.Start();
+
+            Console.WriteLine("Press any button to close.");
+            Console.ReadKey();
         }
     }
 }
