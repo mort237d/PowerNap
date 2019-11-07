@@ -34,8 +34,8 @@ namespace TcpClientConsole
                     sw.WriteLine(fileName.Substring(1));
                     sw.Flush();
 
-                    //todo recieve file
-
+                    string readerString = sr.ReadLine();
+                    Console.WriteLine(readerString);
                 }
             }
             else

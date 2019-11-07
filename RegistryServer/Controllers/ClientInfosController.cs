@@ -40,29 +40,34 @@ namespace RegistryServer.Controllers
 
         // GET: api/ClientInfos/5
 
-        [HttpGet("{id}")]
-        public List<ClientInfo> Get(string id)
+        [HttpGet("{fileName}")]
+        public List<ClientInfo> Get(string fileName)
         {
-            return clientDictionary[id];
+            return clientDictionary[fileName];
         }
 
-        // POST: api/ClientInfos
-        [HttpPost("{id}")]
-        public int Post(string id, [FromBody] ClientInfo value)
+        // POST: api/ClientInfos/music.exe
+        [HttpPost("{fileName}")]
+        public int Post(string fileName, [FromBody] ClientInfo value)
         {
             try
             {
-                if (clientDictionary.ContainsKey(id))
+                if (clientDictionary.ContainsKey(fileName))
                 {
-                    if (clientDictionary[id].Find(ci => ci.Equals(value)) == null)
+                    if (clientDictionary[fileName].Find(ci => ci.Equals(value)) == null)
                     {
-                        clientDictionary[id].Add(value);
+                        clientDictionary[fileName].Add(value);
                         return 1;
                     }
                     else
                     {
                         return 0;
                     }
+                }
+                else if (!clientDictionary.ContainsKey(fileName))
+                {
+                    clientDictionary.Add(fileName, new List<ClientInfo>{(value)});
+                    return 1;
                 }
                 else
                 {
@@ -77,24 +82,23 @@ namespace RegistryServer.Controllers
         }
 
         // PUT: api/ClientInfos/5
-        //[HttpPut("{id}")]
-        //public void Put(string id, [FromBody] ClientInfo value)
+        //[HttpPut("{fileName}")]
+        //public void Put(string fileName, [FromBody] ClientInfo value)
         //{
         //}
 
         // DELETE: api/ApiWithActions/5
-
-        [HttpDelete("{id}")]
-        public int Delete(string id, [FromBody] ClientInfo value)
+        [HttpDelete("{fileName}")]
+        public int Delete(string fileName, [FromBody] ClientInfo value)
         {
             try
             {
-                if (clientDictionary.ContainsKey(id))
+                if (clientDictionary.ContainsKey(fileName))
                 {
-                    List<ClientInfo> clientInformations = clientDictionary[id];
-                    ClientInfo clientInformationToRemove = clientDictionary[id].Find(ci => ci.Equals(value));
+                    List<ClientInfo> clientInformations = clientDictionary[fileName];
+                    ClientInfo clientInformationToRemove = clientDictionary[fileName].Find(ci => ci.Equals(value));
                     clientInformations.Remove(clientInformationToRemove);
-                    clientDictionary[id] = clientInformations;
+                    clientDictionary[fileName] = clientInformations;
                     return 1;
                 }
                 else

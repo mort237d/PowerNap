@@ -6,7 +6,11 @@ namespace TcpServerConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ServerWorker cw = new ServerWorker();
+            cw.Start();
+
+            Console.WriteLine("Press any button to close.");
+            Console.ReadKey();
         }
     }
 }

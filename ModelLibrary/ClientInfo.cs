@@ -1,5 +1,9 @@
-﻿namespace ModelLibrary
+﻿using System;
+using System.Text.RegularExpressions;
+
+namespace ModelLibrary
 {
+    [Serializable]
     public class ClientInfo
     {
         private int _portNumber;
@@ -14,7 +18,16 @@
         public string ClientIpAddress
         {
             get => _clientIpAddress;
-            set => _clientIpAddress = value;
+            set
+            {
+                Regex rgx = new Regex(@"\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b");
+
+                if (!rgx.IsMatch(value))
+                {
+                    throw new ArgumentException("Not a valid IPv4 address.");
+                }
+                _clientIpAddress = value;
+            }
         }
 
         public ClientInfo(int portNumber, string clientIpAddress)
