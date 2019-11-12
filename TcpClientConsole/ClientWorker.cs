@@ -40,7 +40,7 @@ namespace TcpClientConsole
             }
             else
             {
-                Console.WriteLine("Could not find any files with the name: " + fileName.Substring(1));
+                Console.WriteLine("Could not find any files with the name: " + fileName.Substring(1) + "\n");
                 Start();
             }
         }
@@ -59,7 +59,7 @@ namespace TcpClientConsole
 
                     result = JsonConvert.DeserializeObject<List<ClientInfo>>(jsonStr);
 
-                    if (result.Count > 0)
+                    if (result?.Count > 0)
                     {
                         return true;
                     }

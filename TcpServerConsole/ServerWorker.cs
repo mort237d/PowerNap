@@ -41,15 +41,18 @@ namespace TcpServerConsole
         private void RunServer()
         {
             TcpListener server = new TcpListener(IPAddress.Parse(ipAddress), port);
+            Console.WriteLine("Starting server...");
             server.Start();
 
             bool running = true;
 
+            Console.WriteLine("Waiting for client...");
             TcpClient socket = server.AcceptTcpClient();
 
             using (StreamReader reader = new StreamReader(socket.GetStream()))
             using (StreamWriter writer = new StreamWriter(socket.GetStream()))
             {
+                Console.WriteLine("Client found...");
                 string readerString = reader.ReadLine();
 
                 writer.WriteLine("Sharing: " + readerString);
@@ -84,6 +87,8 @@ namespace TcpServerConsole
                         else
                         {
                             writer.WriteLine("Sending files...");
+                            System.Threading.Thread.Sleep(1000);
+                            Console.WriteLine("Files sent...");
                             writer.Flush();
                         }
                     }
@@ -113,11 +118,12 @@ namespace TcpServerConsole
             {
                 string jsonStr = JsonConvert.SerializeObject(serverInfo);
                 
-                StringContent content = new StringContent(jsonStr, Encoding.ASCII, "application/json");
+                StringContent content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
                 foreach (var filename in filesToShare)
                 {
-                    var httpResponseMessage = client.PostAsync(URI + "/" + filename, content).Result;
+                    string url = URI + "/" + filename;
+                    var httpResponseMessage = client.PostAsync(url, content).Result;
                     Console.WriteLine(httpResponseMessage.StatusCode);
                 }
             }

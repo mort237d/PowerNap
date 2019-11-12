@@ -43,7 +43,14 @@ namespace RegistryServer.Controllers
         [HttpGet("{fileName}")]
         public List<ClientInfo> Get(string fileName)
         {
-            return clientDictionary[fileName];
+            if (clientDictionary.ContainsKey(fileName))
+            {
+                return clientDictionary[fileName];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // POST: api/ClientInfos/music.exe
